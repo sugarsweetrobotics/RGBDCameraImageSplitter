@@ -58,7 +58,9 @@ RTC::ReturnCode_t RGBDCameraImageSplitter::onInitialize()
   // <rtc-template block="registration">
   // Set InPort buffers
   addInPort("rgbd", m_rgbdIn);
-  
+  m_rgbdIn.addConnectorDataListener(ON_BUFFER_WRITE,
+	  new DataListener(this));
+
   // Set OutPort buffer
   addOutPort("rgb", m_rgbOut);
   addOutPort("depth", m_depthOut);

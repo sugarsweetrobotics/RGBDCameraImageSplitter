@@ -281,6 +281,60 @@ class RGBDCameraImageSplitter
   
   // </rtc-template>
 
+	 public:
+		 void writeSplitData(const RGBDCamera::TimedRGBDCameraImage& data) {
+			 m_rgb.data = data.data.cameraImage;
+			 m_rgb.tm = data.tm;
+			 m_rgbOut.write();
+
+			 m_depth.data = data.data.depthImage;
+			 m_depth.tm = data.tm;
+			 m_depthOut.write();
+		 }
+};
+
+
+class DataListener
+	: public ConnectorDataListenerT<RGBDCamera::TimedRGBDCameraImage>
+{
+public:
+	DataListener(RGBDCameraImageSplitter* rtc) : m_parent(rtc), vx(0), vy(0), vz(0) {}
+	virtual ~DataListener()
+	{
+		//std::cout << "dtor of " << m_name << std::endl;
+	}
+
+	virtual void operator()(const ConnectorInfo& info,
+		const RGBDCamera::TimedRGBDCameraImage& data)
+	{
+		m_parent->writeSplitData(data);
+		/*
+		static int stdout_counter;
+		double gain = m_parent->getGain();
+		double dvx = data.data.vx - vx;
+		if (dvx < 0 && dvx < -gain) { dvx = -gain; }
+		else if (dvx > 0 && dvx > gain) { dvx = gain; }
+		vx += dvx;
+
+
+		double dvz = data.data.va - vz;
+		if (dvz < 0 && dvz < -gain) { dvz = -gain; }
+		else if (dvz > 0 && dvz > gain) { dvz = gain; }
+		vz += dvz;
+
+		stdout_counter++;
+		if (stdout_counter % 10 == 0) {
+			std::cout << "[RTC:VelocitySmoother] vx / target = " << vx << " / " << data.data.vx << " / " << dvx << std::endl;
+			std::cout << "[RTC:VelocitySmoother] vz / target = " << vz << " / " << data.data.va << " / " << dvz << std::endl;
+		}
+
+		m_parent->writeVelocity(vx, vy, vz);
+		*/
+	};
+
+
+	RGBDCameraImageSplitter *m_parent;
+	double vx, vy, vz;
 };
 
 
