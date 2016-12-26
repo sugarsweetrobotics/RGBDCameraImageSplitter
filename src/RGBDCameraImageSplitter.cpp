@@ -15,15 +15,17 @@ static const char* rgbdcameraimagesplitter_spec[] =
   {
     "implementation_id", "RGBDCameraImageSplitter",
     "type_name",         "RGBDCameraImageSplitter",
-    "description",       "RGBDCameraImage converted to Img::TimedCameraImage and RGBDCamera::TimedDepthImage",
+    "description",       "RGBDCameraImage converted to ImgTimedCameraImage and RGBDCameraTimedDepthImage",
     "version",           "1.0.0",
     "vendor",            "Sugar Sweet Robotics",
-    "category",          "Senso",
+    "category",          "Sensor",
     "activity_type",     "PERIODIC",
     "kind",              "DataFlowComponent",
     "max_instance",      "1",
     "language",          "C++",
     "lang_type",         "compile",
+
+	"conf.default.debug", "1",
     ""
   };
 // </rtc-template>
@@ -58,8 +60,7 @@ RTC::ReturnCode_t RGBDCameraImageSplitter::onInitialize()
   // <rtc-template block="registration">
   // Set InPort buffers
   addInPort("rgbd", m_rgbdIn);
-  m_rgbdIn.addConnectorDataListener(ON_BUFFER_WRITE,
-	  new DataListener(this));
+ m_rgbdIn.addConnectorDataListener(ON_BUFFER_WRITE,	  new DataListener(this));
 
   // Set OutPort buffer
   addOutPort("rgb", m_rgbOut);

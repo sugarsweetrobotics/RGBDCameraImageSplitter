@@ -14,6 +14,8 @@
 #include <rtm/idl/ExtendedDataTypesSkel.h>
 #include <rtm/idl/InterfaceDataTypesSkel.h>
 
+#include <rtm/idl/CameraCommonInterfaceSkel.h>
+
 // Service implementation headers
 // <rtc-template block="service_impl_h">
 
@@ -287,9 +289,9 @@ class RGBDCameraImageSplitter
 			 m_rgb.tm = data.tm;
 			 m_rgbOut.write();
 
-			 m_depth.data = data.data.depthImage;
-			 m_depth.tm = data.tm;
-			 m_depthOut.write();
+			// m_depth.data = data.data.depthImage;
+			// m_depth.tm = data.tm;
+			// m_depthOut.write();
 		 }
 };
 
