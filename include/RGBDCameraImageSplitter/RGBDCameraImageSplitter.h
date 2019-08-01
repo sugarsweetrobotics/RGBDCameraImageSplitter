@@ -289,25 +289,27 @@ class RGBDCameraImageSplitter
 			 m_rgb.tm = data.tm;
 			 m_rgbOut.write();
 
-			// m_depth.data = data.data.depthImage;
-			// m_depth.tm = data.tm;
-			// m_depthOut.write();
+			 m_depth.data = data.data.depthImage;
+			 m_depth.tm = data.tm;
+			 m_depthOut.write();
 		 }
 };
 
 
-class DataListener
+class RGBDDataListener
 	: public ConnectorDataListenerT<RGBDCamera::TimedRGBDCameraImage>
 {
 public:
-	DataListener(RGBDCameraImageSplitter* rtc) : m_parent(rtc), vx(0), vy(0), vz(0) {}
-	virtual ~DataListener()
+	RGBDDataListener(RGBDCameraImageSplitter* rtc) : m_parent(rtc), vx(0), vy(0), vz(0) {}
+	virtual ~RGBDDataListener()
 	{
 		//std::cout << "dtor of " << m_name << std::endl;
 	}
 
-	virtual void operator()(const ConnectorInfo& info,
-		const RGBDCamera::TimedRGBDCameraImage& data)
+
+
+	virtual ReturnCode operator()(ConnectorInfo& info,
+		RGBDCamera::TimedRGBDCameraImage& data)
 	{
 		m_parent->writeSplitData(data);
 		/*
@@ -332,6 +334,7 @@ public:
 
 		m_parent->writeVelocity(vx, vy, vz);
 		*/
+		return RTC::ConnectorDataListener::ReturnCode::NO_CHANGE;
 	};
 
 

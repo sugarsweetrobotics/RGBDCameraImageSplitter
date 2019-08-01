@@ -1,7 +1,7 @@
 set(comp_srcs RGBDCameraImageSplitter.cpp )
 set(standalone_srcs RGBDCameraImageSplitterComp.cpp)
 
-set(RTMCAMERA_LIBRARY "optimized;rtmCamera112_vc14;debug;rtmCamera112_vc14d")
+# set(RTMCAMERA_LIBRARY "optimized;rtmCamera112_vc14;debug;rtmCamera112_vc14d")
 
 
 if (DEFINED OPENRTM_INCLUDE_DIRS)
